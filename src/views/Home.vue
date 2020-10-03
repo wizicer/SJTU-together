@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <div class="block">
-      <span class="demonstration">{{ weekStart }} ~ {{ weekEnd }}</span>
+      <span class="demonstration"
+        >{{ weekStart | dateFormat("YYYY-MM-DD") }} ~
+        {{ weekEnd | dateFormat("YYYY-MM-DD") }}</span
+      >
       <el-slider
         v-model="week"
         @input="updateTable"
@@ -120,15 +123,15 @@ export default class Home extends Vue {
   }
   mounted() {
     this.updateTable();
+    const diff = (+new Date() - +new Date(2020, 9 - 1, 7)) / 3600 / 24 / 1000;
+    this.week = Math.ceil(diff / 7);
   }
 
   public updateTable() {
-    this.weekStart=new Date(2020,9-1,7);
-    this.weekEnd=new Date(2020,9-1,7);
-    console.log(this.weekStart, this.weekEnd);
-    this.weekStart.setDate(this.weekStart.getDate()+(this.week-1)*7);
-    this.weekEnd.setDate(this.weekEnd.getDate()+(this.week)*7-1);
-    console.log(this.weekStart, this.weekEnd);
+    this.weekStart = new Date(2020, 9 - 1, 7);
+    this.weekEnd = new Date(2020, 9 - 1, 7);
+    this.weekStart.setDate(this.weekStart.getDate() + (this.week - 1) * 7);
+    this.weekEnd.setDate(this.weekEnd.getDate() + this.week * 7 - 1);
     this.tableData = [];
     for (let i = 0; i < this.timeTable.length; ++i) {
       this.tableData.push({
@@ -141,7 +144,6 @@ export default class Home extends Vue {
         friday: this.getNameByWeekday("friday", i),
       });
     }
-    console.log(this.tableData);
   }
   private getNameByWeekday(weekday: string, slot: number): string[] {
     return this.memberTimes
