@@ -54,77 +54,19 @@ export default class Home extends Vue {
     { name: "第12节  ", time: "18:55~19:40" },
     { name: "第13节  ", time: "19:41~20:20" },
   ];
-  private memberTimes = [
-    {
-      name: "ls",
-      classes: [
-        { weekday: "monday", start: 9, end: 16, slots: [4, 5] },
-        { weekday: "tuesday", start: 2, end: 17, slots: [2, 3, 4] },
-        { weekday: "tuesday", start: 2, end: 17, slots: [7, 8, 9] },
-        { weekday: "wednesday", start: 1, end: 11, slots: [3, 4] },
-        { weekday: "friday", start: 1, end: 11, slots: [3, 4] },
-        { weekday: "wednesday", start: 2, end: 17, slots: [11, 12, 13] },
-        { weekday: "friday", start: 1, end: 11, slots: [7, 8, 9] },
-      ],
-    },
-    {
-      name: "yx",
-      classes: [
-        { weekday: "monday", start: 9, end: 16, slots: [4, 5] },
-        { weekday: "monday", start: 1, end: 8, slots: [7, 8] },
-        { weekday: "monday", start: 1, end: 16, slots: [9, 10] },
-        { weekday: "tuesday", start: 2, end: 17, slots: [2, 3, 4] },
-        { weekday: "wednesday", start: 2, end: 17, slots: [6, 7, 8] },
-        { weekday: "thursday", start: 2, end: 17, slots: [6, 7, 8] },
-        { weekday: "friday", start: 2, end: 17, slots: [6, 7, 8] },
-        { weekday: "friday", start: 2, end: 12, slots: [11, 12, 13] },
-      ],
-    },
-    {
-      name: "wb",
-      classes: [
-        { weekday: "monday", start: 9, end: 16, slots: [4, 5] },
-        { weekday: "monday", start: 1, end: 8, slots: [7, 8] },
-        { weekday: "monday", start: 1, end: 16, slots: [9, 10] },
-        { weekday: "tuesday", start: 2, end: 17, slots: [2, 3, 4] },
-        { weekday: "wednesday", start: 2, end: 17, slots: [6, 7, 8] },
-        { weekday: "thursday", start: 2, end: 17, slots: [6, 7, 8] },
-        { weekday: "friday", start: 2, end: 17, slots: [6, 7, 8] },
-        { weekday: "friday", start: 2, end: 12, slots: [11, 12, 13] },
-      ],
-    },
-    {
-      name: "xl",
-      classes: [
-        { weekday: "monday", start: 1, end: 8, slots: [11, 12, 13] },
-        { weekday: "tuesday", start: 1, end: 16, slots: [9, 10] },
-        { weekday: "thursday", start: 1, end: 16, slots: [1, 2] },
-      ],
-    },
-    {
-      name: "ms",
-      classes: [
-        { weekday: "monday", start: 1, end: 8, slots: [3, 4] },
-        { weekday: "monday", start: 1, end: 16, slots: [6, 7, 8] },
-        { weekday: "monday", start: 9, end: 16, slots: [9, 10] },
-        { weekday: "tuesday", start: 1, end: 16, slots: [1, 2] },
-        { weekday: "tuesday", start: 1, end: 16, slots: [3, 4] },
-        { weekday: "tuesday", start: 1, end: 16, slots: [6, 7, 8] },
-        { weekday: "tuesday", start: 2, end: 12, slots: [11, 12, 13] },
-        { weekday: "thursday", start: 9, end: 16, slots: [9, 10] },
-        { weekday: "friday", start: 9, end: 16, slots: [3, 4] },
-        { weekday: "friday", start: 1, end: 16, slots: [6, 7, 8] },
-      ],
-    },
-  ];
+  private memberTimes: any[] = [];
   public tableData: any[] = [];
   constructor() {
     super();
   }
+
   mounted() {
     this.updateTable();
     const diff = (+new Date() - +new Date(2020, 9 - 1, 7)) / 3600 / 24 / 1000;
     this.week = Math.ceil(diff / 7);
+    this.memberTimes = JSON.parse(
+      window.localStorage.getItem("config") || "{}"
+    );
   }
 
   public updateTable() {
@@ -147,13 +89,13 @@ export default class Home extends Vue {
   }
   private getNameByWeekday(weekday: string, slot: number): string[] {
     return this.memberTimes
-      .filter((member) =>
+      .filter((member : any) =>
         member.classes.some(
-          (cls) =>
+          (cls : any) =>
             cls.weekday == weekday &&
             cls.start <= this.week &&
             cls.end >= this.week &&
-            cls.slots.some((s) => s === slot)
+            cls.slots.some((s : any) => s === slot)
         )
       )
       .map((_) => _.name);
