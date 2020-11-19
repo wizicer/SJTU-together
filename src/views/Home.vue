@@ -95,7 +95,7 @@ export default class Home extends Vue {
             cls.weekday == weekday &&
             cls.start <= this.week &&
             cls.end >= this.week &&
-            cls.slots.some((s : any) => s === slot)
+            cls.slots.some((s : any) => s === slot + 1)
         )
       )
       .map((_) => _.name);
