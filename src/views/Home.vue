@@ -62,7 +62,7 @@ export default class Home extends Vue {
 
   mounted() {
     this.updateTable();
-    const diff = (+new Date() - +new Date(2020, 9 - 1, 7)) / 3600 / 24 / 1000;
+    const diff = (+new Date() - +new Date(2021, 2 - 1, 22)) / 3600 / 24 / 1000;
     this.week = Math.ceil(diff / 7);
     this.memberTimes = JSON.parse(
       window.localStorage.getItem("config") || "{}"
@@ -70,8 +70,8 @@ export default class Home extends Vue {
   }
 
   public updateTable() {
-    this.weekStart = new Date(2020, 9 - 1, 7);
-    this.weekEnd = new Date(2020, 9 - 1, 7);
+    this.weekStart = new Date(2021, 2 - 1, 22);
+    this.weekEnd = new Date(2021, 2 - 1, 22);
     this.weekStart.setDate(this.weekStart.getDate() + (this.week - 1) * 7);
     this.weekEnd.setDate(this.weekEnd.getDate() + this.week * 7 - 1);
     this.tableData = [];
