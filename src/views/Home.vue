@@ -62,7 +62,7 @@ export default class Home extends Vue {
 
   mounted() {
     this.updateTable();
-    const diff = (+new Date() - +new Date(2021, 2 - 1, 22)) / 3600 / 24 / 1000;
+    const diff = (+new Date() - +new Date(2021, 9 - 1, 13)) / 3600 / 24 / 1000;
     this.week = Math.ceil(diff / 7);
     this.memberTimes = JSON.parse(
       window.localStorage.getItem("config") || "{}"
