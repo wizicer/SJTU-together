@@ -70,8 +70,8 @@ export default class Home extends Vue {
   }
 
   public updateTable() {
-    this.weekStart = new Date(2021, 2 - 1, 22);
-    this.weekEnd = new Date(2021, 2 - 1, 22);
+    this.weekStart = new Date(2021, 9 - 1, 13);
+    this.weekEnd = new Date(2021, 9 - 1, 13);
     this.weekStart.setDate(this.weekStart.getDate() + (this.week - 1) * 7);
     this.weekEnd.setDate(this.weekEnd.getDate() + this.week * 7 - 1);
     this.tableData = [];
