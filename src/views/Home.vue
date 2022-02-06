@@ -36,7 +36,7 @@ import { Component, Vue } from "vue-property-decorator";
   components: {},
 })
 export default class Home extends Vue {
-  public week = 3;
+  public week = 0;
   public weekStart = new Date();
   public weekEnd = new Date();
   private timeTable = [
@@ -56,13 +56,23 @@ export default class Home extends Vue {
   ];
   private memberTimes: any[] = [];
   public tableData: any[] = [];
+
+  private startYear = 2022;
+  private startMonth = 2;
+  private startDay = 14;
+
   constructor() {
     super();
   }
 
   mounted() {
     this.updateTable();
-    const diff = (+new Date() - +new Date(2021, 9 - 1, 13)) / 3600 / 24 / 1000;
+    const diff =
+      (+new Date() -
+        +new Date(this.startYear, this.startMonth - 1, this.startDay)) /
+      3600 /
+      24 /
+      1000;
     this.week = Math.ceil(diff / 7);
     this.memberTimes = JSON.parse(
       window.localStorage.getItem("config") || "{}"
@@ -70,8 +80,12 @@ export default class Home extends Vue {
   }
 
   public updateTable() {
-    this.weekStart = new Date(2021, 9 - 1, 13);
-    this.weekEnd = new Date(2021, 9 - 1, 13);
+    this.weekStart = new Date(
+      this.startYear,
+      this.startMonth - 1,
+      this.startDay
+    );
+    this.weekEnd = new Date(this.startYear, this.startMonth - 1, this.startDay);
     this.weekStart.setDate(this.weekStart.getDate() + (this.week - 1) * 7);
     this.weekEnd.setDate(this.weekEnd.getDate() + this.week * 7 - 1);
     this.tableData = [];
@@ -89,13 +103,13 @@ export default class Home extends Vue {
   }
   private getNameByWeekday(weekday: string, slot: number): string[] {
     return this.memberTimes
-      .filter((member : any) =>
+      .filter((member: any) =>
         member.classes.some(
-          (cls : any) =>
+          (cls: any) =>
             cls.weekday == weekday &&
             cls.start <= this.week &&
             cls.end >= this.week &&
-            cls.slots.some((s : any) => s === slot + 1)
+            cls.slots.some((s: any) => s === slot + 1)
         )
       )
       .map((_) => _.name);
